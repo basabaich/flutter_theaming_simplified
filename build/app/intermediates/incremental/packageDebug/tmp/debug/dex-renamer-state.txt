@@ -1,0 +1,4 @@
+#Mon May 08 08:30:30 IST 2023
+base.0=F\:\\AA_Flutterproject_2023\\expense_tracker\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

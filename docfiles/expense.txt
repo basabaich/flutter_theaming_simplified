@@ -1,0 +1,22 @@
+//01-05-2023
+//chapter 96
+//
+import 'package:uuid/uuid.dart';
+
+const uuid = Uuid();
+
+//Install "UUID" package from "pub.dev" website. To install just run in terminal the following command
+// $ "flutter pub add uuid" (all in small letters).
+
+class Expense {
+  Expense({
+    required this.title,
+    required this.amount,
+    required this.date,
+  }) : id = uuid.v4();
+
+  final String id;
+  final String title;
+  final double amount;
+  final DateTime date;
+}

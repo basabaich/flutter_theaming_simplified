@@ -1,0 +1,27 @@
+//01-05-2023
+//chapter 96
+//
+import 'package:flutter/material.dart';
+
+class Expenses extends StatefulWidget {
+  const Expenses({super.key});
+  @override
+  State<Expenses> createState() {
+    //throw UnimplementedError();
+    return _ExpensesState();
+  }
+}
+
+class _ExpensesState extends State<Expenses> {
+  //const _ExpensesState({super.key});
+  @override
+  Widget build(BuildContext context) {
+    //throw UnimplementedError();
+    return const Scaffold(
+      body: Column(children: [
+        Text('the chart'),
+        Text('expenses list'),
+      ]),
+    );
+  }
+}
