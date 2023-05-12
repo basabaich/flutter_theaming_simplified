@@ -75,36 +75,29 @@ class _NewExpenseState extends State<NewExpense> {
             decoration: const InputDecoration(label: Text('Title')),
           ), //TextField
           //
+          //
           //Similarly we create another textfield for amount
-          //
-          //
-          //we now put up a "Row()" here so that we can reduce the size of the
-          //amount text field and put a "DateTime()" input function there.
-          //Also, we put the second Text field inside the row's first widget
-          //of the children. teh second widget will be the DateTime widget.
-          Row(
-            children: [
-              TextField(
-                controller: _amountController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  label: Text('Amount'),
-                  //
-                  //
-                  prefixText: 'Rs. ',
-                  //"PrefixText:" puts a currency notation the moment we click
-                  // on "amount" text field to enter an amount. No backslash is
-                  // necessary.
-                ), //InputDecoration
-              ), //TextField
-              const SizedBox(
-                width: 16,
-              )
-              //Putting a Sized box to get some space after "amount" text box.
+          TextField(
+            controller: _amountController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(
+              label: Text('Amount'),
+              //
+              //
+              prefixText: 'Rs. ',
+              //"PrefixText:" puts a currency notation the moment we click
+              // on "amount" text field to enter an amount. No backslash is
+              // necessary.
+            ), //InputDecoration
+          ), //TextField
+          const SizedBox(
+            width: 16,
+          ), //SizedBox
+          //Putting a Sized box to get some space after "amount" text box.
 //
 //
-            ],
-          ), //Row
+          //     ],
+          //   ), //Row
 
           Row(
             children: [
@@ -136,8 +129,8 @@ class _NewExpenseState extends State<NewExpense> {
               ElevatedButton(
                 onPressed: () {
                   //ignore:
-                  print(_titleController.text);
-                  print(_amountController);
+                  //  print(_titleController.text);
+                  // print(_amountController);
                 },
                 style: ButtonStyle(
                     elevation: const MaterialStatePropertyAll(26),
