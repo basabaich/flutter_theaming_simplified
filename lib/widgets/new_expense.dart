@@ -7,6 +7,10 @@
 //
 //
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; //IMPORTED to enable us to read the chosen-
+
+//date time format as below.
+final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key});
@@ -34,19 +38,36 @@ class _NewExpenseState extends State<NewExpense> {
   final _amountController = TextEditingController();
   //
   //
-  void _presentDatePicker() {
+  //
+  //
+  //IMPORTANT - To store the Date time picked by the user, we first create an
+  //variable as below. This is the "DateTime" variable.
+  DateTime? _selectedDate;
+  //When we code as "DateTime?" this means is the value a DateTime value or a
+  //null. if it is not null, pass the value to the variable "_selectedDate"
+  void _presentDatePicker() async {
     //We create a variable to create the "initialDate", "firstDate" &
-    //"lastDate"
+    //"lastDate". Also to store the FUTURE datetime value if the user chooses
+    //one, will be stored in the variable "pickedDate", we added "async" &
+    //"await" commands in this function's line.
+    //
     final now = DateTime.now();
     //
     final firstDate = DateTime(now.year - 1, now.month, now.day);
-    showDatePicker(
+    final pickedDate = await showDatePicker(
+      //"ShowDatePicker" is a built in function in flutter.
       context: context,
       initialDate: now,
       firstDate: firstDate,
       lastDate: now,
     );
-    //"ShowDatePicker" is a built in function in flutter.
+    //We now use "setState()" function to get this date if user has picked one
+    //through the below method.
+    setState(
+      () {
+        _selectedDate = pickedDate;
+      },
+    );
   }
 
   //We can put this method which will take the date time picker icon pressed
@@ -133,7 +154,19 @@ class _NewExpenseState extends State<NewExpense> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   //This will keep the next widget at the centre horizontally.
                   children: [
-                    const Text('Selected date'),
+                    Text(
+                      _selectedDate == null
+                          ? 'No date selected'
+                          : formatter.format(_selectedDate!),
+                    ),
+                    //We also output the selected date in this above text box
+                    //For this to be understandable & human read-able we need
+                    //to import the "intl" class which we used in "expense.dart"
+                    //file.
+                    //IMPORTANT: the code above means If "_selectedDate"
+                    //equals to "null", the text will show 'No date selected'
+                    //else (i.e. ":" Colon sign) command "formatter" will
+                    //format the date selected for human values & display.
                     IconButton(
                       onPressed: _presentDatePicker,
                       //This method is used as a pointer for teh "onPressed()"
