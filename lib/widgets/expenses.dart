@@ -5,6 +5,8 @@ import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.dart';
 //We are calling class "ExpensesList()", we need to import that package
+//as we will be using this class at the end to display the list of expenses
+// in the body of this class i.e. "Expenses" class.
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 
 //
@@ -59,13 +61,36 @@ class _ExpensesState extends State<Expenses> {
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => const NewExpense(),
+      builder: (ctx) => NewExpense(onAddExpense: _addExpense),
       //In the "NewExpense" class the pattern of "Modal Bottom Sheet" is
       //designed & we are calling it from here through "NewExpense".
     );
   }
+
   //
   //
+  //Adding a new method called "addExpense". We need to get the value of
+  //"expense" of type "Expense". The method "_addExpense" will show an error
+  // as it is never executed. Now this method we need to tie up with the
+  //submit button code / login inside the class "NewExpense".
+  void _addExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+
+      //We need to put "_registeredExpenses" inside the "setState()", so
+      //that all dynamic changes by the user can be
+      // recorded.
+      //we include the "add" method here with the "_registeredExpenses" & in
+      //the add method we pass on the variable against which we will get the
+      //value i.e. "expense".
+      //We will update the changed list in the "body" of this class i.e.
+      //"Expenses" class, whenever the data is updated by clicking the "Submit"
+      //button (& called by the "ExpensesList" class)
+    });
+  }
+
+//
+//
 
   @override
   Widget build(BuildContext context) {

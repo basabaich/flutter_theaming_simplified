@@ -6,14 +6,30 @@
 //user & is dynamic in nature so it is under "StatefulWidget" class.
 //
 //
+//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; //IMPORTED to enable us to read the chosen-
-
 //date time format as below.
+import '../models/expense.dart'; //Need to import this class as we are calling
+//it
+
+//date time format will be as "ymd()" i.e. year - month - day.
 final formatter = DateFormat.yMd();
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({
+    super.key,
+    required this.onAddExpense, //this need to be added / initiated in Super.key
+  });
+//
+//
+  //To enter new expenses, whenever we click on submit button , first we need
+  //to create a function as below:
+  final void Function(Expense expense) onAddExpense;
+//
+//
+//
+
   @override
   State<NewExpense> createState() {
     return _NewExpenseState();
@@ -45,6 +61,9 @@ class _NewExpenseState extends State<NewExpense> {
   DateTime? _selectedDate;
   //When we code as "DateTime?" this means is the value a DateTime value or a
   //null. if it is not null, pass the value to the variable "_selectedDate"
+  //
+  //Define the dropdownbutton default value:
+  Category _selectedCategory = Category.leisure;
   void _presentDatePicker() async {
     //We create a variable to create the "initialDate", "firstDate" &
     //"lastDate". Also to store the FUTURE datetime value if the user chooses
@@ -70,6 +89,81 @@ class _NewExpenseState extends State<NewExpense> {
     );
   }
 
+//
+//
+//validating user inputs
+  void _submitExpenseData() {
+    //First we will check if the amount entered is either 'zero' or an invalid
+    // number i.e. any alphabets or signs were entered.
+    //We will use "double.tryParse()" this will try to convert the value
+    //entered in the _amountController field to a number. but if it fails to
+    //do so, then "double.tryParse()" will return a null value. This is the
+    //logic. We need to evaluate if the "enteredAmount" is null or not.
+    //tryParse('Hello') will return null as the 'Hello' string can not be
+    //changed to a double number.
+    final enteredAmount = double.tryParse(_amountController.text);
+    //
+    //We now need to check if the "enteredAmount" is null or not.
+    //We will also check if the "enteredAmount" is less than equal to zero or
+    //not.
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    //
+    //Next we will check if the title filed is kept empty with below logic of
+    //"isEmpty". Also we need to check the Boolean value of "amountIsInvalid"
+    //is false or true. So this will be with an "OR" operator.
+    //We also need to check if the date parameter is not entered. So we will
+    //check with an OR operator if "_selectedDate" is null.
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      //If the above sitution is true, we want to show an error meessage. We
+      //will be using "AlertDialog()" in this case.
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid Input !!'),
+          content: const Text(
+            '''Please make sure that a valid title, amount, date & 
+            category is entered !''',
+          ), //Text
+          //Using text within three single quotes for line breaks.
+          actions: [
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.pop(ctx); //This will close the error dialog
+              },
+            ) //TextButton
+          ],
+        ), //AlertDialog
+      ); //showDialog
+      return; //WE are writing this "return" here to lock this "showDialog"
+      //widget & its associated codes, such that if due to code logic the
+      //programming cycle enters this "showDialog" then after executing this
+      //"showDialog" it will not execute any other code what so ever. As once
+      //all the data are entered correctly, then the below codes will be
+      //executed - which will add the new data in the main widget screen.
+      //However, if the data are not entered correctly & the programming cycle
+      //enters the "showDialog" then it will not read & execute the below
+      //codes which are specifically written to add new data in the main
+      //widget screen.
+    }
+    //we can access the "addNewExpense" function with the help of "Widget"
+    //method as below. So, we will try to get access of "onAddExpense"
+    //function from this widget class :-
+    widget.onAddExpense(
+      Expense(
+          title: _titleController.text,
+          amount: enteredAmount,
+          date: _selectedDate!,
+          category: _selectedCategory),
+    );
+    Navigator.pop(context); //This will close the 'Overlay' after data entered
+    //correctly in it & the new data been added on the main screen.
+  }
+
+//
+//
   //We can put this method which will take the date time picker icon pressed
   //event, before or after "@override" as it doesn't matter.
   //
@@ -86,6 +180,13 @@ class _NewExpenseState extends State<NewExpense> {
     _amountController.dispose();
     super.dispose();
   }
+
+  //
+  //
+
+  //
+  //
+  //
 
   @override
   Widget build(BuildContext context) {
@@ -187,9 +288,42 @@ class _NewExpenseState extends State<NewExpense> {
 //
           //     ],
           //   ), //Row
-
+          const SizedBox(height: 16),
           Row(
             children: [
+              //Dropdownbutton defined here with the help of a map() method
+              //
+              DropdownButton(
+                  value: _selectedCategory, //Using default category to display
+                  items: Category.values
+                      .map(
+                        (category) => DropdownMenuItem(
+                          //added "value" which will not be visble in our app
+                          // but this will store the value of the dropdownbutton
+                          //chosen by the user internally.
+                          value: category,
+                          child: Text(
+                            category.name.toUpperCase(), //No need to use a
+                            //".toString()" here as "name" itself is a string.
+                            //However, we set the name in uppercase by default.
+                          ), //Text
+                        ), //DropdownMenuItem
+                      )
+                      .toList(),
+                  onChanged: (value) {
+                    // print(value);
+                    //Use dynamic changing method i.e. "setState()" here
+                    if (value == null) {
+                      return; // This means program will not execute any
+                      //further codes inside this "onChanged" method. Else it
+                      //will go from here to "setState()".
+                    }
+                    setState(() {
+                      _selectedCategory = value; //This will report an error
+                      //as in the event user didn't selected a value then it's
+                      //a null. So we are doint an "if" check at begining.
+                    });
+                  }), //DropdownButton
               const Spacer(
                 flex: 12,
               ), //Spacer
@@ -217,14 +351,18 @@ class _NewExpenseState extends State<NewExpense> {
               ), //Spacer
               ElevatedButton(
                 onPressed: () {
+                  _submitExpenseData();
                   //ignore:
                   //  print(_titleController.text);
                   // print(_amountController);
+                  // widget.onAddExpense(Expense(title: _titleController, amount: _amountController, date: _selectedDate, category: _))
                 },
                 style: ButtonStyle(
-                    elevation: const MaterialStatePropertyAll(26),
-                    backgroundColor: MaterialStatePropertyAll(
-                        Colors.yellow[800])), //ButtonStyle
+                  elevation: const MaterialStatePropertyAll(26),
+                  backgroundColor: MaterialStatePropertyAll(
+                    Colors.yellow[800],
+                  ), //MaterialStatePropertyAll
+                ), //ButtonStyle
                 child: const Text(
                   'Submit',
                   style: TextStyle(fontSize: 12),

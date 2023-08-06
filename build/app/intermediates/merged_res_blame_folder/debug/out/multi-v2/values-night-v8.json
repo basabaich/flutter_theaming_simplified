@@ -4,7 +4,7 @@
             "outputFile": "com.example.expense_tracker.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "F:\\AA_Flutterproject_2023\\expense_tracker\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "F:\\AA_Flutterproject_2023\\flutter_adding_new_expensese_in_expense_tracker\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
