@@ -191,7 +191,9 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
+      //From topmost position this will be @ 48 pixels. This will not
+      //create hindarance to any sensors in the android.
       child: Column(
         children: [
           //This widget is a text field to allow the user to input some text
