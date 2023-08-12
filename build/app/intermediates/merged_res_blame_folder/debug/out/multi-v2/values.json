@@ -4,7 +4,7 @@
             "outputFile": "com.example.expense_tracker.app-mergeDebugResources-9:/values/values.xml",
             "map": [
                 {
-                    "source": "F:\\AA_Flutterproject_2023\\flutter_opening_full_screen_modal_bottom_sheet\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "F:\\AA_Flutterproject_2023\\flutter_theaming_simplified\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

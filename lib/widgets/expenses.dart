@@ -1,7 +1,7 @@
 //
 //File: expenses.dart in "Lib/widget" folder.
 //
-import 'package:expense_tracker/widgets/new_expense.dart';
+//import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/models/expense.dart';
 //We are calling class "ExpensesList()", we need to import that package
@@ -58,18 +58,18 @@ class _ExpensesState extends State<Expenses> {
   //New method added to control plus button click event at AppBar
   //This function / method when called by clicking the plus sign
   //on the AppBar will open up a "Modal bottom sheet".
-  void _openAddExpenseOverlay() {
-    showModalBottomSheet(
-      //#######################################################
-      isScrollControlled: true, //IF this is set to "true" then the modal bottom
-      //sheet will be of full screen
-      //######################################################
-      context: context,
-      builder: (ctx) => NewExpense(onAddExpense: _addExpense),
-      //In the "NewExpense" class the pattern of "Modal Bottom Sheet" is
-      //designed & we are calling it from here through "NewExpense".
-    );
-  }
+  // void _openAddExpenseOverlay() {
+  //   showModalBottomSheet(
+  //     //#######################################################
+  //     isScrollControlled: true, //IF this is set to "true" then the modal bottom
+  //     //sheet will be of full screen
+  //     //######################################################
+  //     context: context,
+  //     builder: (ctx) => NewExpense(onAddExpense: _addExpense),
+  //     //In the "NewExpense" class the pattern of "Modal Bottom Sheet" is
+  //     //designed & we are calling it from here through "NewExpense".
+  //   );
+  // }
 
   //
   //
@@ -77,21 +77,21 @@ class _ExpensesState extends State<Expenses> {
   //"expense" of type "Expense". The method "_addExpense" will show an error
   // as it is never executed. Now this method we need to tie up with the
   //submit button code / login inside the class "NewExpense".
-  void _addExpense(Expense expense) {
-    setState(() {
-      _registeredExpenses.add(expense);
+  // void _addExpense(Expense expense) {
+  //   setState(() {
+  //     _registeredExpenses.add(expense);
 
-      //We need to put "_registeredExpenses" inside the "setState()", so
-      //that all dynamic changes by the user can be
-      // recorded.
-      //we include the "add" method here with the "_registeredExpenses" & in
-      //the add method we pass on the variable against which we will get the
-      //value i.e. "expense".
-      //We will update the changed list in the "body" of this class i.e.
-      //"Expenses" class, whenever the data is updated by clicking the "Submit"
-      //button (& called by the "ExpensesList" class)
-    });
-  }
+  //We need to put "_registeredExpenses" inside the "setState()", so
+  //that all dynamic changes by the user can be
+  // recorded.
+  //we include the "add" method here with the "_registeredExpenses" & in
+  //the add method we pass on the variable against which we will get the
+  //value i.e. "expense".
+  //We will update the changed list in the "body" of this class i.e.
+  //"Expenses" class, whenever the data is updated by clicking the "Submit"
+  //button (& called by the "ExpensesList" class)
+  //   });
+  // }
 
 //
 //
@@ -109,7 +109,7 @@ class _ExpensesState extends State<Expenses> {
         backgroundColor: Colors.amber.shade700,
         actions: [
           IconButton(
-            onPressed: _openAddExpenseOverlay,
+            onPressed: () {},
             icon: const Icon(
               Icons.add,
               size: 18,
